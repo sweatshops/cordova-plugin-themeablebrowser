@@ -212,7 +212,7 @@
     // and feel that is consistent across platforms. We'd do this hack to
     // minimize changes from the original ThemeableBrowser so when merge from the
     // ThemeableBrowser is needed, it wouldn't be super pain in the ass.
-    browserOptions.toolbarposition = kThemeableBrowserToolbarBarPositionTop;
+//    browserOptions.toolbarposition = kThemeableBrowserToolbarBarPositionTop;
 
     if (browserOptions.clearcache) {
         NSHTTPCookie *cookie;
@@ -328,6 +328,8 @@
                                    initWithRootViewController:self.themeableBrowserViewController];
     nav.orientationDelegate = self.themeableBrowserViewController;
     nav.navigationBarHidden = YES;
+    nav.modalPresentationStyle = self.themeableBrowserViewController.modalPresentationStyle;
+    nav.modalTransitionStyle = self.themeableBrowserViewController.modalTransitionStyle;
     // Run later to avoid the "took a long time" log message.
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.themeableBrowserViewController != nil) {
