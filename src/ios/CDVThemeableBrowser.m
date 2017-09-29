@@ -839,7 +839,7 @@
     if (customButtons) {
         NSInteger cnt = 0;
         // Reverse loop because we are laying out from outer to inner.
-        for (NSDictionary* customButton in [customButtons reverseObjectEnumerator]) {
+        for (NSDictionary* customButton in customButtons) {
             UIButton* button = [self createButton:customButton action:@selector(goCustomButton:) withDescription:[NSString stringWithFormat:@"custom button at %ld", (long)cnt]];
             if (button) {
                 button.tag = cnt;
