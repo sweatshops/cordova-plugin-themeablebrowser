@@ -52,6 +52,7 @@
 @property (nonatomic) NSDictionary* backButton;
 @property (nonatomic) NSDictionary* forwardButton;
 @property (nonatomic) NSDictionary* closeButton;
+@property (nonatomic) NSDictionary* shareButton;
 @property (nonatomic) NSDictionary* menu;
 @property (nonatomic) NSArray* customButtons;
 @property (nonatomic) BOOL backButtonCanClose;
@@ -103,6 +104,7 @@
 @property (nonatomic, strong) IBOutlet UIButton* backButton;
 @property (nonatomic, strong) IBOutlet UIButton* forwardButton;
 @property (nonatomic, strong) IBOutlet UIButton* menuButton;
+@property (nonatomic, strong) IBOutlet UIButton* shareButton
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* spinner;
 @property (nonatomic, strong) IBOutlet UIView* toolbar;
 
