@@ -24,6 +24,7 @@
 #define    kThemeableBrowserTargetSelf @"_self"
 #define    kThemeableBrowserTargetSystem @"_system"
 #define    kThemeableBrowserTargetBlank @"_blank"
+#define    kThemeableBrowserTargetShare @"_share"
 
 #define    kThemeableBrowserToolbarBarPositionBottom @"bottom"
 #define    kThemeableBrowserToolbarBarPositionTop @"top"
@@ -150,8 +151,10 @@
             [self openInCordovaWebView:absoluteUrl withOptions:options];
         } else if ([target isEqualToString:kThemeableBrowserTargetSystem]) {
             [self openInSystem:absoluteUrl];
-        } else { // _blank or anything else
+        } else if ([target isEqualToString:kThemeableBrowserTargetBlank]){ // _blank or anything else
             [self openInThemeableBrowser:absoluteUrl withOptions:options];
+        } else if ([target isEqualToString:kThemeableBrowserTargetShare]) {
+            [self share];
         }
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
@@ -318,6 +321,7 @@
 
 - (void)show:(CDVInvokedUrlCommand*)command withAnimation:(BOOL)animated
 {
+    if (
     if (self.themeableBrowserViewController == nil) {
         [self emitWarning:kThemeableBrowserEmitCodeUnexpected
               withMessage:@"Show called but already closed."];
@@ -1206,7 +1210,7 @@
 }
 
 -(void)share {
-    
+    [self close];
 }
 
 - (void)navigateTo:(NSURL*)url
