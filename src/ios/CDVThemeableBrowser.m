@@ -170,6 +170,13 @@
     }
 }
 
+- (void)share:(CDVInvokedUrlCommand*)command
+{
+    if (self.themeableBrowserViewController) {
+        [self.themeableBrowserViewController share];
+    }
+}
+
 - (CDVThemeableBrowserOptions*)parseOptions:(NSString*)options
 {
     CDVThemeableBrowserOptions* obj = [[CDVThemeableBrowserOptions alloc] init];
