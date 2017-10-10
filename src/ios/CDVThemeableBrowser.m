@@ -1198,6 +1198,10 @@
     [self.webView reload];
 }
 
+-(void)share {
+    
+}
+
 - (void)navigateTo:(NSURL*)url
 {
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
