@@ -154,7 +154,7 @@
         } else if ([target isEqualToString:kThemeableBrowserTargetBlank]){ // _blank or anything else
             [self openInThemeableBrowser:absoluteUrl withOptions:options];
         } else if ([target isEqualToString:kThemeableBrowserTargetShare]) {
-            [self share];
+            [self close];
         }
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
@@ -321,7 +321,6 @@
 
 - (void)show:(CDVInvokedUrlCommand*)command withAnimation:(BOOL)animated
 {
-    if (
     if (self.themeableBrowserViewController == nil) {
         [self emitWarning:kThemeableBrowserEmitCodeUnexpected
               withMessage:@"Show called but already closed."];
