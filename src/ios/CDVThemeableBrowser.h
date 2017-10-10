@@ -104,7 +104,7 @@
 @property (nonatomic, strong) IBOutlet UIButton* backButton;
 @property (nonatomic, strong) IBOutlet UIButton* forwardButton;
 @property (nonatomic, strong) IBOutlet UIButton* menuButton;
-@property (nonatomic, strong) IBOutlet UIButton* shareButton
+@property (nonatomic, strong) IBOutlet UIButton* shareButton;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* spinner;
 @property (nonatomic, strong) IBOutlet UIView* toolbar;
 
