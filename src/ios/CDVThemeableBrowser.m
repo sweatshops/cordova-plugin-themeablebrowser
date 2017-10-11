@@ -410,20 +410,33 @@
 
 - (void)injectScriptCode:(CDVInvokedUrlCommand*)command
 {
-    NSArray *data = [[command argumentAtIndex:0] componentsSeparatedByString:@" GE!@#$MPOS "];
-    NSString *url = [data objectAtIndex:1];
-    NSString* target = [data objectAtIndex:0];
-    
-    if ([target isEqualToString:kThemeableBrowserTargetShare]) {
-        [self.themeableBrowserViewController share:url];
+    if ([[command argumentAtIndex:0] rangeOfString:@" GE!@#$MPOS "].location != NSNotFound) {
+        NSArray *data = [[command argumentAtIndex:0] componentsSeparatedByString:@" GE!@#$MPOS "];
+        NSString *url = [data objectAtIndex:1];
+        NSString* target = [data objectAtIndex:0];
+        NSString* fileURL = [data objectAtIndex:2];
+        NSString* fileName = [[fileURL componentsSeparatedByString:@"/"] lastObject];
+        NSString* tempFilePath = [fileURL stringByReplacingOccurrencesOfString:fileName withString:@""];
+        [[NSFileManager defaultManager] removeItemAtPath:tempFilePath error:nil];
+        
+        if ( [[NSFileManager defaultManager] isReadableFileAtPath:url] ) {
+            [[NSFileManager defaultManager] createDirectoryAtPath:tempFilePath withIntermediateDirectories:NO attributes:nil error:nil];
+            [[NSFileManager defaultManager] copyItemAtPath:url toPath:fileURL error:nil];
+        }
+        
+        
+        
+        if ([target isEqualToString:kThemeableBrowserTargetShare]) {
+            [self.themeableBrowserViewController share:fileURL filename:fileName];
+        }
+    } else {
+        NSString* jsWrapper = nil;
+        
+        if ((command.callbackId != nil) && ![command.callbackId isEqualToString:@"INVALID"]) {
+            jsWrapper = [NSString stringWithFormat:@"_cdvIframeBridge.src='gap-iab://%@/'+encodeURIComponent(JSON.stringify([eval(%%@)]));", command.callbackId];
+        }
+        [self injectDeferredObject:[command argumentAtIndex:0] withWrapper:jsWrapper];
     }
-    
-    NSString* jsWrapper = nil;
-    
-    if ((command.callbackId != nil) && ![command.callbackId isEqualToString:@"INVALID"]) {
-        jsWrapper = [NSString stringWithFormat:@"_cdvIframeBridge.src='gap-iab://%@/'+encodeURIComponent(JSON.stringify([eval(%%@)]));", command.callbackId];
-    }
-    [self injectDeferredObject:[command argumentAtIndex:0] withWrapper:jsWrapper];
 }
 
 - (void)injectScriptFile:(CDVInvokedUrlCommand*)command
@@ -1223,7 +1236,7 @@
     [self.webView reload];
 }
 
--(void)share:(NSString*)url {
+-(void)share:(NSString*)url filename:(NSString*)fileName {
     if (!NSClassFromString(@"UIActivityViewController")) {
         CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"not available"];
         return;
