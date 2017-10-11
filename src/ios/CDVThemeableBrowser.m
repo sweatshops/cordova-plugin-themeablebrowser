@@ -427,7 +427,7 @@
         
         
         if ([target isEqualToString:kThemeableBrowserTargetShare]) {
-            [self.themeableBrowserViewController share:fileURL filename:fileName];
+            [self.themeableBrowserViewController share:fileURL];
         }
     } else {
         NSString* jsWrapper = nil;
