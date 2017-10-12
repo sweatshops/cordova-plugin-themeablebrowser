@@ -1236,7 +1236,7 @@
     [self.webView reload];
 }
 
--(void)share:(NSString*)url filename:(NSString*)fileName {
+-(void)share:(NSString*)url {
     if (!NSClassFromString(@"UIActivityViewController")) {
         CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"not available"];
         return;
